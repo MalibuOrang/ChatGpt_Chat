@@ -1,6 +1,6 @@
 # flutter_chargpt_chat
 
-A new Flutter project.
+A new Flutter project, usage State Manager Provider.
 
 ## Getting Started
 
