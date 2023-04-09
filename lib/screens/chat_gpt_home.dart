@@ -1,19 +1,20 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chargpt_chat/constants/constants.dart';
-import 'package:flutter_chargpt_chat/providers/chat_providers.dart';
+import 'package:flutter_chargpt_chat/providers/chat_provider.dart';
 import 'package:flutter_chargpt_chat/services/assets_manager_services.dart';
 import 'package:flutter_chargpt_chat/services/services.dart';
 import 'package:flutter_chargpt_chat/services/voice_handler_services.dart';
 import 'package:flutter_chargpt_chat/widgets/chat_message_widget.dart';
-import 'package:flutter_chargpt_chat/widgets/clear_button_widget.dart';
+import 'package:flutter_chargpt_chat/widgets/delete_mes_button.dart';
+import 'package:flutter_chargpt_chat/widgets/mic_button_widget.dart';
 import 'package:flutter_chargpt_chat/widgets/send_button_widget.dart';
 import 'package:flutter_chargpt_chat/widgets/text_field_widget.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../providers/hive_boxes_provider.dart';
-import '../providers/models_providet.dart';
+import '../providers/models_provider.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -63,10 +64,17 @@ class _ChatPageState extends State<ChatPage> {
           ),
           title: const Text("ChatGPT"),
           actions: [
-            ClearButtonWidget(onSended: () {
-              hiveProvider.clearHive(hiveProvider.chatBox);
-              Navigator.pop(context);
-            }),
+            DeleteButtonWidget(
+              onDeleteMes: () {
+                hiveProvider.clearHive(hiveProvider.chatBox);
+                Navigator.pop(context);
+              },
+              iconBut: const Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+              labelMes: "Ви дійсно хочете видалити всі повідомлення?",
+            ),
             IconButton(
               onPressed: () async {
                 await Services.showModalSheet(context: context);
@@ -85,6 +93,7 @@ class _ChatPageState extends State<ChatPage> {
                     itemBuilder: (context, index) {
                       chatProvider.chatValue =
                           hiveProvider.chatBox.getAt(index)!;
+                      chatProvider.isNewMes = true;
                       return ChatMessageWidget(
                         msg: chatProvider.chatValue.msg,
                         chatIndex: chatProvider.chatValue.chatIndex,
@@ -144,8 +153,8 @@ class _ChatPageState extends State<ChatPage> {
                               repeatPauseDuration:
                                   const Duration(microseconds: 100),
                               showTwoGlows: true,
-                              child: GestureDetector(
-                                onLongPress: () async {
+                              child: MicroButton(
+                                onLongPressed: () async {
                                   chatProvider.onButtonAnimation();
                                   await voiceHandler.sendVoiceMessage();
                                   await chatProvider.sendMessageFCT(
@@ -159,22 +168,11 @@ class _ChatPageState extends State<ChatPage> {
                                       hiveProvider: hiveProvider,
                                       context: context);
                                 },
-                                onLongPressEnd: (details) async {
+                                isButtonAnimated: chatProvider.buttonAnimation,
+                                onLongPressedEnd: () async {
                                   await voiceHandler.stopListening();
                                   chatProvider.offButtonAnimation();
                                 },
-                                child: Transform.scale(
-                                  scale: 0.8,
-                                  child: FloatingActionButton(
-                                    onPressed: () {},
-                                    backgroundColor: Colors.white,
-                                    child: Icon(
-                                        chatProvider.buttonAnimation
-                                            ? Icons.mic
-                                            : Icons.mic_none,
-                                        color: Colors.red),
-                                  ),
-                                ),
                               ),
                             ),
                     ],

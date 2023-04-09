@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chargpt_chat/constants/constants.dart';
-import 'package:flutter_chargpt_chat/providers/chat_providers.dart';
+import 'package:flutter_chargpt_chat/providers/chat_provider.dart';
 import 'package:flutter_chargpt_chat/providers/hive_boxes_provider.dart';
-import 'package:flutter_chargpt_chat/providers/models_providet.dart';
+import 'package:flutter_chargpt_chat/providers/models_provider.dart';
 import 'package:flutter_chargpt_chat/screens/chat_gpt_home.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';

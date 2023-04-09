@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chargpt_chat/constants/constants.dart';
 import 'package:flutter_chargpt_chat/models/models_model.dart';
 import 'package:flutter_chargpt_chat/providers/hive_boxes_provider.dart';
-import 'package:flutter_chargpt_chat/providers/models_providet.dart';
+import 'package:flutter_chargpt_chat/providers/models_provider.dart';
 import 'package:flutter_chargpt_chat/widgets/text_message_widget.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';

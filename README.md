@@ -1,16 +1,3 @@
-# flutter_chargpt_chat
-
+# flutter_chatGPT_chat
 A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+It has basic functionality, and work with api. There is sending messages by voice, and printing from the keyboard, buttons for deleting messages, and a button for copying messages, there is a choice of model. All information about this model is taken locally from Box.

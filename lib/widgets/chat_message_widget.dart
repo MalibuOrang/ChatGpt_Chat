@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chargpt_chat/constants/constants.dart';
 import 'package:flutter_chargpt_chat/services/assets_manager_services.dart';
 import 'package:flutter_chargpt_chat/widgets/text_message_widget.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_chargpt_chat/widgets/toast_widget.dart';
 import 'package:provider/provider.dart';
-import '../providers/chat_providers.dart';
+import '../providers/chat_provider.dart';
 import '../providers/hive_boxes_provider.dart';
-import 'alert_dialog_delete_widget.dart';
+import 'delete_mes_button.dart';
 
 class ChatMessageWidget extends StatefulWidget {
   const ChatMessageWidget(
@@ -18,7 +18,6 @@ class ChatMessageWidget extends StatefulWidget {
   final String msg;
   final int chatIndex;
   final int indexOfElement;
-
   @override
   State<ChatMessageWidget> createState() => _ChatMessageWidgetState();
 }
@@ -54,7 +53,7 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                       ? TextMessageWidget(
                           lable: widget.msg,
                         )
-                      : widget.msg.isNotEmpty
+                      : widget.msg.isNotEmpty && chatProvider.isNewMes
                           ? DefaultTextStyle(
                               style: const TextStyle(
                                   color: Colors.white,
@@ -85,15 +84,8 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                     IconButton(
                       onPressed: () {
                         chatProvider.copyTextToClipboard(widget.msg);
-                        Fluttertoast.showToast(
-                          msg: 'Повідомлення скопійовано!',
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.grey,
-                          textColor: Colors.white,
-                          fontSize: 12.0,
-                        );
+                        ToastWidget.showToast(
+                            message: "Повідомлення скопійовано!");
                       },
                       icon: const Icon(
                         Icons.copy_all,
@@ -101,30 +93,19 @@ class _ChatMessageWidgetState extends State<ChatMessageWidget> {
                         color: Colors.white,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) {
-                              return AlertDialogDeleteWidget(
-                                labelMessage:
-                                    "Ви дійсно хочете видалити це повідомлення?",
-                                labelYes: "Так",
-                                labelNo: "Ні",
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  hiveProvider.deleteOneItemFromHive(
-                                      index, hiveProvider.chatBox);
-                                },
-                              );
-                            });
+                    DeleteButtonWidget(
+                      onDeleteMes: () {
+                        Navigator.pop(context);
+                        hiveProvider.deleteOneItemFromHive(
+                            index, hiveProvider.chatBox);
                       },
-                      icon: const Icon(
+                      iconBut: const Icon(
                         Icons.delete_forever,
                         size: 20,
                         color: Colors.white,
                       ),
-                    ),
+                      labelMes: "Ви дійсно хочете видалити повідомлення?",
+                    )
                   ],
                 )
               ],

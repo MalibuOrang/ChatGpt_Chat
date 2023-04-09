@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:speech_to_text/speech_to_text.dart';
+import '../widgets/toast_widget.dart';
 
 class VoiceHandler {
   final SpeechToText _speechToText = SpeechToText();
@@ -22,7 +22,7 @@ class VoiceHandler {
         },
       );
     } catch (e) {
-      log(e.toString());
+      ToastWidget.showToast(message: "$e");
     }
     return completer.future;
   }
@@ -39,7 +39,7 @@ class VoiceHandler {
         _result = await startListening();
       }
     } catch (e) {
-      log(e.toString());
+      ToastWidget.showToast(message: "$e");
     }
     return _result;
   }
