@@ -4,12 +4,13 @@ import 'package:flutter_chargpt_chat/models/chat_model.dart';
 import 'package:flutter_chargpt_chat/providers/hive_boxes_provider.dart';
 import '../services/api_service.dart';
 import '../services/voice_handler_services.dart';
-import 'models_providet.dart';
+import 'models_provider.dart';
 
 class ChatProvider with ChangeNotifier {
   List<ChatModel> chatList = [];
   late ChatModel chatValue;
   bool buttonAnimation = false;
+  bool isNewMes = true;
   bool _isWriting = false;
   bool get isWriting => _isWriting;
   late ScrollController listScrollController;
@@ -111,6 +112,7 @@ class ChatProvider with ChangeNotifier {
       showSnackBar(error.toString());
     } finally {
       _isWriting = false;
+      isNewMes = false;
       notifyListeners();
     }
   }

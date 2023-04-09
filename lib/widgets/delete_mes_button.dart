@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'alert_dialog_delete_widget.dart';
 
-class ClearButtonWidget extends StatelessWidget {
-  final VoidCallback onSended;
-  const ClearButtonWidget({super.key, required this.onSended});
+class DeleteButtonWidget extends StatelessWidget {
+  final VoidCallback onDeleteMes;
+  final Icon iconBut;
+  final String labelMes;
+  const DeleteButtonWidget(
+      {super.key,
+      required this.onDeleteMes,
+      required this.iconBut,
+      required this.labelMes});
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -12,17 +18,16 @@ class ClearButtonWidget extends StatelessWidget {
             context: context,
             builder: (_) {
               return AlertDialogDeleteWidget(
-                labelMessage: "Ви дійсно хочете видалити всі повідомлення?",
+                labelMessage: labelMes,
                 labelYes: "Так",
                 labelNo: "Ні",
-                onPressed: onSended,
+                onPressed: () {
+                  onDeleteMes();
+                },
               );
             });
       },
-      icon: const Icon(
-        Icons.delete,
-        color: Colors.white,
-      ),
+      icon: iconBut,
     );
   }
 }

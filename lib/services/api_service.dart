@@ -20,7 +20,6 @@ class ApiService {
       List temp = [];
       for (var value in jsonResponce["data"]) {
         temp.add(value);
-        log("temp: ${value["id"]}");
       }
       return ModelsModel.modelFromsSnapshot(temp);
     } catch (error) {
@@ -32,7 +31,6 @@ class ApiService {
   static Future<List<ChatModel>> sendMessage(
       {required String message, required String modelId}) async {
     try {
-      log("modelId: $modelId");
       var respPost = await http.post(
         Uri.parse("$baseUrl/completions"),
         headers: {
@@ -66,11 +64,9 @@ class ApiService {
     }
   }
 
-  // Usage ChatGPT Turbo models 3.5
   static Future<List<ChatModel>> sendMessageTurboGPT(
       {required String message, required String modelId}) async {
     try {
-      log("modelId: $modelId");
       var respPost = await http.post(
         Uri.parse("$baseUrl/chat/completions"),
         headers: {

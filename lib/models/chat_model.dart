@@ -9,10 +9,7 @@ class ChatModel {
   @HiveField(1)
   final int chatIndex;
   ChatModel({required this.msg, required this.chatIndex});
-  @override
-  String toString() {
-    return 'ChatModel{msg: $msg, chatIndex: $chatIndex}';
-  }
+
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
         msg: json["msg"],
         chatIndex: json["chatIndex"],
