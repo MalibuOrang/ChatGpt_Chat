@@ -1,5 +1,5 @@
 # flutter_chargpt_chat:
-Projet usage API: https://platform.openai.com/docs/overview
+Project usage API: https://platform.openai.com/docs/overview
 - Hive,
 - http,
 - Speach Recognized,
